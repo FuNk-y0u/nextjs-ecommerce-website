@@ -11,3 +11,26 @@ model Admin{
   id Int @id @default(autoincrement())
   passwordHash String
 }
+
+model Orders{
+  id String @id @default(uuid())
+  email String
+  phone String
+  firstName String
+  lastName String
+  shippingAddress String
+}
+
+model Items{
+  id String @id @default(uuid())
+  name String
+  description String
+  price String
+}
+
+model OrderItems{
+  id Int @id @default(autoincrement())
+  orderId String
+  itemId String
+  itemCount Int
+}

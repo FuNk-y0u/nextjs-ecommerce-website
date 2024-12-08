@@ -1,24 +1,50 @@
 
 'use client'
-import { useEffect } from "react";
-import { getCookie } from "cookies-next";
+
 import axios from "axios";
+import { useEffect, useState } from "react";
+
 import { useRouter } from 'next/navigation';
+import { getCookie } from "cookies-next";
+
+import AdminNav from "@components/AdminNav";
+import OrdersPage from "@components/Admin/OrdersPage";
+import ProductsPage from "@components/Admin/ProductsPage";
+import { deleteCookie } from "cookies-next/client";
 
 export default function dashboard() {
     const router = useRouter();
+
+    const [pageIndex, setPageIndex] = useState(0);
+
     useEffect( () => {
         async function authenticate() {
             let token = getCookie("auth");
             var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/session`, {
                 token: token
             });
-            console.log(result);
             if(!result.data.success){
                 router.push('/');
             }
         }
         authenticate();
     });
-    return <h1>Hello Admin!</h1>
+
+    return<>
+        <div className="flex bg-gray-200 h-[100vh]">
+            <AdminNav
+            logout={() => {
+                router.push('/admin');
+                deleteCookie("auth");
+            }}
+            initPageIndex={pageIndex}
+            onPageChange={(index)=>{
+                setPageIndex(index);
+            }}
+            />
+            <div className="w-full h-full overflow-y-scroll">
+                {pageIndex == 0?<OrdersPage/>:<ProductsPage/>}
+            </div>
+        </div>
+    </>
 }

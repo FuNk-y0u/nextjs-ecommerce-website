@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from 'next/navigation';
 import axios from "axios";
 import { setCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 
 import { ColorSchemeScript } from '@mantine/core';
 import { Button, TextInput } from '@mantine/core';
@@ -11,6 +12,7 @@ import { IconAlertHexagon } from '@tabler/icons-react';
 import { Loader } from '@mantine/core';
 
 import {useState } from "react";
+import { useEffect } from "react";
 
 
 export default function Admin(){
@@ -18,6 +20,24 @@ export default function Admin(){
     const [loginError, setLoginError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    useEffect( () => {
+        async function authenticate() {
+            let token = getCookie("auth");
+            if(token){
+                var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/session`, {
+                    token: token
+                });
+                if(!result.data.success){
+                    router.push('/');
+                }
+                else{
+                    router.push("/admin/dashboard");
+                }
+            }
+        }
+        authenticate();
+    });
 
     const validate_admin = async () => {
         setIsLoading(true);
@@ -59,7 +79,7 @@ export default function Admin(){
                             setPassword(event.currentTarget.value);
                         }}
                     />
-                    <Button className="w-full" onClick={validate_admin}>
+                    <Button className="w-full" onClick={validate_admin} color="black">
                         {
                             isLoading?<Loader color="white" size="sm"/>:"Login"
                         }

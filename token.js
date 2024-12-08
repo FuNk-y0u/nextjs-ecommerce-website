@@ -19,4 +19,13 @@ const check_token = (token) => {
   }
 }
 
-module.exports = {gen_admin_token, check_token};
+const check_admin = (token) => {
+  var result = check_token(token);
+  if(!result){
+    return false;
+  }
+  else{
+      return true
+  }
+}
+module.exports = {gen_admin_token, check_token, check_admin};
