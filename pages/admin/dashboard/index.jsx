@@ -31,7 +31,7 @@ export default function dashboard() {
     });
 
     return<>
-        <div className="flex bg-gray-200 h-[100vh]">
+        <div className="flex h-[100vh]">
             <AdminNav
             logout={() => {
                 router.push('/admin');
