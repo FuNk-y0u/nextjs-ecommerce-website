@@ -7,7 +7,7 @@ import { IconSettings } from '@tabler/icons-react';
 import { IconLogout } from '@tabler/icons-react';
 
 import {useState } from "react";
-import SectionLabel from './Admin/SectionLabel';
+import SectionLabel from './SectionLabel';
 
 export default function AdminNav(props){
     const [active, setActive] = useState(props.initPageIndex);

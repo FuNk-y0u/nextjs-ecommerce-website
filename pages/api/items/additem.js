@@ -1,8 +1,10 @@
-import prisma from "db";
-import {check_admin} from "token";
+import prisma from "../../../lib/db";
+import {check_admin} from "../../../lib/token";
+
 export default async function additem(req, res) {
     if (req.method == "POST"){
         var token = req.body.token;
+        
         if(!token){
             res.status(200).json({
                 success: false,
@@ -20,11 +22,13 @@ export default async function additem(req, res) {
         }
 
         var body = req.body;
+
         var product = {
             name: body.name?body.name:"",
             description: body.description?body.description:"",
             price: body.price?body.price:""
         }
+
         await prisma.Items.create({
             data: product
         });

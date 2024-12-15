@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { getCookie } from "cookies-next";
 
-import AdminNav from "@components/AdminNav";
+import AdminNav from "@components/Admin/AdminNav";
 import OrdersPage from "@components/Admin/OrdersPage";
 import ProductsPage from "@components/Admin/ProductsPage";
 import { deleteCookie } from "cookies-next/client";
+
+import {endPoints, getEndpoint} from "../../pages";
 
 export default function dashboard() {
     const router = useRouter();
@@ -20,7 +22,7 @@ export default function dashboard() {
     useEffect( () => {
         async function authenticate() {
             let token = getCookie("auth");
-            var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/session`, {
+            var result = await axios.post(getEndpoint(endPoints.sesAdmin), {
                 token: token
             });
             if(!result.data.success){

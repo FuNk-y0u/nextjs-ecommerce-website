@@ -14,6 +14,8 @@ import { Loader } from '@mantine/core';
 import {useState } from "react";
 import { useEffect } from "react";
 
+import { endPoints, getEndpoint } from "pages/pages";
+
 
 export default function Admin(){
     const [password, setPassword] = useState("");
@@ -23,9 +25,10 @@ export default function Admin(){
 
     useEffect( () => {
         async function authenticate() {
+            console.log(getEndpoint(endPoints.sesAdmin));
             let token = getCookie("auth");
             if(token){
-                var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/session`, {
+                var result = await axios.post(getEndpoint(endPoints.sesAdmin), {
                     token: token
                 });
                 if(!result.data.success){
@@ -41,7 +44,7 @@ export default function Admin(){
 
     const validate_admin = async () => {
         setIsLoading(true);
-        var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/admin`, {
+        var result = await axios.post(AUTH_ADMIN, {
             password: password
         })
         if(result.status == 200){

@@ -1,8 +1,8 @@
-import bcrypt_compare from "crypt";
-import prisma from "../../db";
-import {gen_admin_token} from "token";
+import bcrypt_compare from "../../../lib/crypt";
+import prisma from "../../../lib/db";
+import {gen_admin_token} from "../../../lib/token";
 
-export default async function admin(req, res){
+export default async function verify(req, res){
     if (req.method == "POST"){
         var password = req.body.password;
         if(!password){

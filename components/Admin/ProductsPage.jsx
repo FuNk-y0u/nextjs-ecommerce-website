@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next';
 import { IconCirclePlus } from '@tabler/icons-react';
 import AdminListTable from './AdminListTable';
 
+import { endPoints, getEndpoint } from 'pages/pages';
 export default function ProductsPage() {
     const [items, setItems] = useState([]);
 
@@ -26,7 +27,7 @@ export default function ProductsPage() {
     useEffect(() => {
         async function getItems() {
             setIsLoading(true);
-            var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/getitem`, {});
+            var result = await axios.post(getEndpoint(endPoints.getItem), {});
             if(!result.data.success){
                 
                 console.log(result);
@@ -50,7 +51,7 @@ export default function ProductsPage() {
 
         let token = getCookie("auth");
         setIsLoading(true);
-        var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/additem`,{
+        var result = await axios.post(getEndpoint(endPoints.addItem),{
             token: token,
             name: product.name,
             description: product.description,
@@ -77,7 +78,7 @@ export default function ProductsPage() {
         setIsLoading(true);
 
         let token = getCookie("auth");
-        var result = await axios.post(`${process.env.NEXT_PUBLIC_SV_IP}/api/deleteitem`,{
+        var result = await axios.post(getEndpoint(endPoints.delItem),{
             token: token,
             id: id
         });

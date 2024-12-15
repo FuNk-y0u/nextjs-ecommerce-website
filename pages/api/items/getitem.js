@@ -1,4 +1,4 @@
-import prisma from "db";
+import prisma from "../../../lib/db";
 
 export default async function getitem(req, res){
     if (req.method == "POST"){

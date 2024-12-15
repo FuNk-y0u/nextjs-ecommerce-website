@@ -1,8 +1,10 @@
-import Head from 'next/head'
+
 export default function Home() {
   return (
-    <div className="container">
-      <h1>Home page</h1>
+    <div className="">
+      <div className="h-[100vh]">
+        Home Page
+      </div>
     </div>
   )
 }
