@@ -18,12 +18,20 @@ export default function ProductsPage() {
 
     const [productAdded, setProductAdded] = useState(false);
 
+    const [editItemMenu, setEditItemMenu] = useState(false);
+
     var product = {
         name: "",
         description: "",
-        price: ""
+        price: "",
     }
 
+    const [editProduct, setEditProduct] = useState({
+        id: "",
+        name: "",
+        description: "",
+        price: "",
+    })
     useEffect(() => {
         async function getItems() {
             setIsLoading(true);
@@ -44,7 +52,7 @@ export default function ProductsPage() {
 
     const add_item = async (event) => {
         event.preventDefault();
-
+        setEditItemMenu(false);
         if(isLoading){
             return;
         }
@@ -92,6 +100,45 @@ export default function ProductsPage() {
         setIsLoading(false);
     }
 
+    const edit_item = async(id, name, description, price) => {
+        close();
+        setEditProduct({
+            id: id,
+            name: name,
+            description: description,
+            price: price
+        });
+
+        setEditItemMenu(true);
+    }
+
+    const edit_item_sendrq = async (event) => {
+        event.preventDefault();
+        if(isLoading){
+            return;
+        }
+
+        setIsLoading(true);
+
+        let token = getCookie("auth");
+        console.log(product);
+        var result = await axios.post(getEndpoint(endPoints.editItem),{
+            token: token,
+            id: editProduct.id,
+            name: editProduct.name,
+            description: editProduct.description,
+            price: editProduct.price
+        });
+        if(!result.data.success){
+            console.log(result);
+        }
+        else{
+            setEditItemMenu(false);
+            setProductAdded(!productAdded);
+        }
+        setIsLoading(false);
+    }
+
   return (
     <div className='flex flex-col p-4 gap-2'>
         
@@ -117,6 +164,43 @@ export default function ProductsPage() {
                 <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
             </form>
         </Dialog>
+
+        <Dialog position={{ bottom: 20, right: 20 }} opened={editItemMenu} withCloseButton onClose={()=>{setEditItemMenu(false)}}>
+            <form className="flex flex-col gap-2" onSubmit={edit_item_sendrq}>
+                <h1>Edit item</h1>
+                <TextInput className='' label="Item name" placeholder={editProduct.name} onChange={(event) => {
+                    setEditProduct(
+                        {
+                            id: editProduct.id,
+                            name: event.currentTarget.value,
+                            description: editProduct.description,
+                            price: editProduct.price,
+                        }
+                    )
+                }}></TextInput>
+                <Textarea label="Item description" placeholder={editProduct.description} onChange={(event) => {
+                    setEditProduct(
+                        {
+                            id: editProduct.id,
+                            name: editProduct.name,
+                            description: event.currentTarget.value,
+                            price: editProduct.price,
+                        }
+                    )
+                }}></Textarea>
+                <TextInput className='' label="Item Price" placeholder={editProduct.price} onChange={(event) => {
+                    setEditProduct(
+                        {
+                            id: editProduct.id,
+                            name: editProduct.name,
+                            description: editProduct.description,
+                            price: event.currentTarget.value,
+                        }
+                    )
+                }}></TextInput>
+                <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
+            </form>
+        </Dialog>
         
         {/* Header for the page */}
         <div className='flex justify-between'>
@@ -127,7 +211,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Item listing stuff */}
-        <AdminListTable items={items} headers={["","Id","Name","Description","Price"]} delete_item={delete_item}/>
+        <AdminListTable items={items} headers={["","Id","Name","Description","Price"]} delete_item={delete_item} edit_item={edit_item}/>
 
     </div>
   )

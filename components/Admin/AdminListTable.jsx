@@ -1,10 +1,11 @@
+
 import React from 'react'
 import { Table, Button} from '@mantine/core';
-import { IconTrashFilled } from '@tabler/icons-react';
+import { IconEdit, IconTrashFilled } from '@tabler/icons-react';
+
 export default function AdminListTable(props) {
   return (
     <Table  withTableBorder withColumnBorders>
-
         {/* Table head */}
         <Table.Thead>
             <Table.Tr>
@@ -27,6 +28,9 @@ export default function AdminListTable(props) {
                         <Button color='red' variant="subtle" size='xs' onClick={() => {
                             props.delete_item(item.id);
                         }}><IconTrashFilled/></Button>
+                        <Button color='black' variant="subtle" size='xs' onClick={() => {
+                            props.edit_item(item.id, item.name, item.description, item.price);
+                        }}><IconEdit/></Button>
                         </Table.Td>
                         <Table.Td>
                             {item.id}
