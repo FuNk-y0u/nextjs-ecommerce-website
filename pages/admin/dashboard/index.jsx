@@ -12,7 +12,7 @@ import OrdersPage from "@components/Admin/OrdersPage";
 import ProductsPage from "@components/Admin/ProductsPage";
 import { deleteCookie } from "cookies-next/client";
 
-import {endPoints, getEndpoint} from "../../pages";
+import {endPoints, getEndpoint} from "../../../lib/pages";
 
 export default function dashboard() {
     const router = useRouter();

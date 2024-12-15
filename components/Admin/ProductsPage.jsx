@@ -8,7 +8,7 @@ import { getCookie } from 'cookies-next';
 import { IconCirclePlus } from '@tabler/icons-react';
 import AdminListTable from './AdminListTable';
 
-import { endPoints, getEndpoint } from 'pages/pages';
+import { endPoints, getEndpoint } from '../../lib/pages';
 export default function ProductsPage() {
     const [items, setItems] = useState([]);
 

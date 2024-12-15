@@ -14,7 +14,7 @@ import { Loader } from '@mantine/core';
 import {useState } from "react";
 import { useEffect } from "react";
 
-import { endPoints, getEndpoint } from "pages/pages";
+import { endPoints, getEndpoint } from "../../lib/pages";
 
 
 export default function Admin(){
