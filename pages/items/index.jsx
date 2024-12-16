@@ -1,10 +1,12 @@
 import ProductItem from '@components/Items/ProductItem';
 import React from 'react';
-
+import TitleBackgroundImage from "../../public/pickled-cucumbers-glass-jars-blue-background.jpg";
 export default function index() {
   return (
     <>
-    <div className="h-96 flex items-center justify-center" id="head-bar">
+    <div className="h-96 flex items-center justify-center" id="head-bar" style={{
+      backgroundImage: `url(${TitleBackgroundImage.src})`
+    }}>
       <div className="flex items-center justify-center" id="head-bar-tint">
         <h1 className='text-5xl font-bold text-white'>Our Products.</h1>
       </div>
