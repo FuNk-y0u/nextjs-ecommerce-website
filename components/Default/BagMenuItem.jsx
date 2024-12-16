@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Drawer, Indicator, rem, TextInput } from '@mantine/core'
 import { IconTrash } from '@tabler/icons-react'
-import StockPickleImage from "../../pubic/lemon-pickle-recipe.jpg";
+import StockPickleImage from "../../public/lemon-pickle-recipe.jpg";
 import Image from 'next/image';
 export default function BagMenuItem(props) {
   return (

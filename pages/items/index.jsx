@@ -1,7 +1,6 @@
 import ProductItem from '@components/Items/ProductItem';
 import React from 'react';
-import Image from 'next/image';
-import StockPickleImage from "../../pubic/lemon-pickle-recipe.jpg";
+
 export default function index() {
   return (
     <>
@@ -11,7 +10,7 @@ export default function index() {
       </div>
     </div>
     <div className="flex justify-center">
-      <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         <ProductItem/>
         <ProductItem/>
         <ProductItem/>

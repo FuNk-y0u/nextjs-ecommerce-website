@@ -1,11 +1,11 @@
 import React from 'react'
 import Image from "next/image";
-import pickleImg from "../../pubic/lemon-pickle-recipe.jpg"
+import pickleImg from "../../public/lemon-pickle-recipe.jpg"
 import { Button } from '@mantine/core';
 
 export default function ProductItem() {
   return (
-    <div className="flex flex-col gap-2 hover:bg-stone-200 p-5 rounded-lg transition-colors w-56" id="item-pannel">
+    <div className="flex flex-col gap-2 hover:bg-stone-200 p-5 rounded-lg transition-colors " id="item-pannel">
         <div className="rounded-lg">
           <Image src={pickleImg} width="200" height="200" className='rounded-lg'></Image>
         </div>
