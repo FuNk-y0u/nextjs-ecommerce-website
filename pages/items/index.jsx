@@ -1,7 +1,31 @@
-import React from 'react'
-
+import ProductItem from '@components/Items/ProductItem';
+import React from 'react';
+import Image from 'next/image';
+import StockPickleImage from "../../pubic/lemon-pickle-recipe.jpg";
 export default function index() {
   return (
-    <div>items page</div>
+    <>
+    <div className="h-96 flex items-center justify-center" id="head-bar">
+      <div className="flex items-center justify-center" id="head-bar-tint">
+        <h1 className='text-5xl font-bold text-white'>Our Products.</h1>
+      </div>
+    </div>
+    <div className="flex justify-center">
+      <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+        <ProductItem/>
+      </div>
+    </div>
+    </>
+    
+    
   )
 }

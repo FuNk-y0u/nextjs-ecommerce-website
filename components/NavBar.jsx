@@ -10,14 +10,14 @@ export default function NavBar(props) {
     const [openNav, setOpenNav] = useState(false);
     const router = useRouter();
     return <>
-        <div className="flex bg-gray-50 h-20 items-center justify-around sticky top-0 shadow-md">
+        <div className="flex bg-gray-50 h-20 items-center justify-around sticky top-0 shadow-md z-10">
             <div className="md:hidden">
             <Button variant="transparent" onClick={()=>{setOpenNav(!openNav)}}>
                 <IconMenu color="black"/>
             </Button>
             </div>
             
-            <h1 className="text-xl font-semibold text-gray-700">Aamako.com.np</h1>
+            <h1 className="text-xl font-semibold text-gray-700">AacharEcommerce.com.np</h1>
             <div className="text-sm hidden md:flex gap-10">
                 <a className="hover:underline underline-offset-2 cursor-pointer" onClick={() => {
                     router.push('/');
@@ -38,7 +38,7 @@ export default function NavBar(props) {
             setOpenNav(false)
         }}>
             <div className="flex flex-col h-[80vh] w-full justify-around">
-                <h1 className="text-2xl font-semibold text-gray-700">Aamako.com.np</h1>
+                <h1 className="text-2xl font-semibold text-gray-700">AacharEcommerce.com.np</h1>
 
                 <div className="flex flex-col gap-2 text-2xl">
                     <NavLink  color="black" label="Home" onClick={() => {
