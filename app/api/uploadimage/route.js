@@ -3,9 +3,9 @@ import {writeFile} from "fs/promises";
 import { join } from "path";
 import {v4 as uuidv4} from 'uuid';
 
-export async function POST(req: NextRequest, res: NextResponse){
+export async function POST(req, res){
     try{
-        const file = (await req.formData()).get("file") as File;
+        const file = (await req.formData()).get("file");
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);

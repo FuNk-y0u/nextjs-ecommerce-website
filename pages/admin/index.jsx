@@ -44,7 +44,7 @@ export default function Admin(){
 
     const validate_admin = async () => {
         setIsLoading(true);
-        var result = await axios.post(AUTH_ADMIN, {
+        var result = await axios.post(getEndpoint(endPoints.authAdmin), {
             password: password
         })
         if(result.status == 200){
