@@ -34,7 +34,8 @@ export default async function deleteitem(req, res) {
         var newProduct = {
             name: body.name?body.name:"",
             description: body.description?body.description:"",
-            price: body.price?body.price:""
+            price: body.price?body.price:"",
+            image: body.image?body.image:""
         }
 
         await prisma.Items.update({

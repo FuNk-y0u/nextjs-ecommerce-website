@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { getCookie } from "cookies-next";
 
-import AdminNav from "@components/Admin/AdminNav";
-import OrdersPage from "@components/Admin/OrdersPage";
-import ProductsPage from "@components/Admin/ProductsPage";
+import AdminNav from "@/components/Admin/AdminNav";
+import OrdersPage from "@/components/Admin/OrdersPage";
+import ProductsPage from "@/components/Admin/ProductsPage";
 import { deleteCookie } from "cookies-next/client";
 
 import {endPoints, getEndpoint} from "../../../lib/pages";

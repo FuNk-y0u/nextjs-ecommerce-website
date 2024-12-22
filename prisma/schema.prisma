@@ -26,6 +26,7 @@ model Items{
   name String
   description String
   price String
+  image String
 }
 
 model OrderItems{

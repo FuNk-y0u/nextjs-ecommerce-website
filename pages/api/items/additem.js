@@ -26,7 +26,8 @@ export default async function additem(req, res) {
         var product = {
             name: body.name?body.name:"",
             description: body.description?body.description:"",
-            price: body.price?body.price:""
+            price: body.price?body.price:"",
+            image: body.image?body.image:""
         }
 
         await prisma.Items.create({

@@ -59,22 +59,36 @@ export default function ProductsPage() {
 
         let token = getCookie("auth");
         setIsLoading(true);
-        var result = await axios.post(getEndpoint(endPoints.addItem),{
-            token: token,
-            name: product.name,
-            description: product.description,
-            price: product.price
-        });
+        
+        let file = document.getElementById("image-file").files[0];
 
+        const data = new FormData(event.target);
+        data.append("file", file);
+
+        var result = await axios.post(getEndpoint(endPoints.uploadImage), data);
+        
         if(!result.data.success){
-            console.log(result);
+            result = await axios.post(getEndpoint(endPoints.addItem),{
+                token: token,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                image: result.data.path
+            });
+            if(!result.data.success){
+                console.log(result);
+            }
+            else{
+                close();
+                setProductAdded(!productAdded);
+                
+            }
+            setIsLoading(false);
         }
         else{
             close();
             setProductAdded(!productAdded);
-            
         }
-        setIsLoading(false);
     }
 
     const delete_item =  async (id) => {
@@ -161,6 +175,7 @@ export default function ProductsPage() {
                 <TextInput className='' label="Item Price" placeholder='eg: NPR 1200' onChange={(event) => {
                     product.price = event.currentTarget.value;
                 }}></TextInput>
+                <input id="image-file" type="file"></input>
                 <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
             </form>
         </Dialog>
@@ -198,6 +213,7 @@ export default function ProductsPage() {
                         }
                     )
                 }}></TextInput>
+                <input id="image-file-edit" type="file"></input>
                 <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
             </form>
         </Dialog>
@@ -211,7 +227,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Item listing stuff */}
-        <AdminListTable items={items} headers={["","Id","Name","Description","Price"]} delete_item={delete_item} edit_item={edit_item}/>
+        <AdminListTable items={items} headers={["","Id","Image","Name","Description","Price"]} delete_item={delete_item} edit_item={edit_item}/>
 
     </div>
   )

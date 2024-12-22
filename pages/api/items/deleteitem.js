@@ -1,5 +1,6 @@
-import prisma from "../../../lib/db";
-import {check_admin} from "../../../lib/token";
+import prisma from "@/lib/db";
+import {check_admin} from "@/lib/token";
+import { unlinkSync } from "fs";
 
 export default async function deleteitem(req, res) {
     if (req.method == "POST"){
@@ -42,6 +43,15 @@ export default async function deleteitem(req, res) {
                 success: false,
                 message: "Invalid product id",
             });
+        }
+        
+        let link = String(product.image).split("/");
+        let name = link[link.length - 1];
+
+        try{
+            unlinkSync(`./public/items/${name}`);
+        }
+        catch(error){
         }
 
         await prisma.Items.delete({

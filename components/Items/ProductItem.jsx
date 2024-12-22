@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from "next/image";
-import pickleImg from "../../public/lemon-pickle-recipe.jpg"
+import pickleImg from "@/public/lemon-pickle-recipe.jpg"
 import { Button } from '@mantine/core';
 
 export default function ProductItem() {

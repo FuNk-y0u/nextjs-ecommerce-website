@@ -1,6 +1,6 @@
-import ProductItem from '@components/Items/ProductItem';
+import ProductItem from '@/components/Items/ProductItem';
 import React from 'react';
-import TitleBackgroundImage from "../../public/pickled-cucumbers-glass-jars-blue-background.jpg";
+import TitleBackgroundImage from "@/public/pickled-cucumbers-glass-jars-blue-background.jpg";
 export default function index() {
   return (
     <>
