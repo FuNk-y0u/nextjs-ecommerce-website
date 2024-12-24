@@ -27,6 +27,7 @@ model Items{
   description String
   price String
   image String
+  cartItem CartItem[]
 }
 
 model OrderItems{
@@ -34,4 +35,13 @@ model OrderItems{
   orderId String
   itemId String
   itemCount Int
+}
+
+model CartItem{
+  id Int @id @default(autoincrement())
+
+  cartId String
+  item Items @relation(fields: [itemId], references: [id])
+  itemId String
+  count Int
 }

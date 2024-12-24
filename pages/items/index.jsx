@@ -1,7 +1,23 @@
-import ProductItem from '@/components/Items/ProductItem';
-import React from 'react';
 import TitleBackgroundImage from "@/public/pickled-cucumbers-glass-jars-blue-background.jpg";
-export default function index() {
+import ProductItem from '@/components/Items/ProductItem';
+
+import React, { useState } from 'react';
+
+import axios from 'axios';
+import { getEndpoint, endPoints} from '@/lib/pages';
+import { getCookie } from "cookies-next";
+
+async function addToCart(itemId){
+  let id = getCookie("cart-id");
+  var result = await axios.post(getEndpoint(endPoints.addcartItem), {
+    id: id,
+    itemId: itemId
+  });
+}
+
+export default function index({products}) {
+  const items = products.items;
+
   return (
     <>
     <div className="h-96 flex items-center justify-center" id="head-bar" style={{
@@ -13,20 +29,27 @@ export default function index() {
     </div>
     <div className="flex justify-center">
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
-        <ProductItem/>
+        {
+          items.map((value) => {
+            return <ProductItem name={value.name} price={value.price} image={value.image} addCart={() => {
+              addToCart(value.id);
+            }}/>
+          })
+        }
       </div>
     </div>
     </>
-    
-    
   )
+}
+
+export async function getServerSideProps(){
+  var result = await axios.post(getEndpoint(endPoints.getItem), {});
+    if(!result.data.success){  
+      console.log(result);
+    }
+    else{
+    }
+  return {props: {
+    products: result.data
+  }}
 }

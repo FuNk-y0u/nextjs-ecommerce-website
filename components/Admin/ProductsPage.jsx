@@ -24,6 +24,7 @@ export default function ProductsPage() {
         name: "",
         description: "",
         price: "",
+        image: ""
     }
 
     const [editProduct, setEditProduct] = useState({
@@ -31,6 +32,7 @@ export default function ProductsPage() {
         name: "",
         description: "",
         price: "",
+        image: ""
     })
     useEffect(() => {
         async function getItems() {
@@ -60,35 +62,23 @@ export default function ProductsPage() {
         let token = getCookie("auth");
         setIsLoading(true);
         
-        let file = document.getElementById("image-file").files[0];
+        var result = await axios.post(getEndpoint(endPoints.addItem),{
+            token: token,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            image: product.image
+        });
 
-        const data = new FormData(event.target);
-        data.append("file", file);
-
-        var result = await axios.post(getEndpoint(endPoints.uploadImage), data);
-        
         if(!result.data.success){
-            result = await axios.post(getEndpoint(endPoints.addItem),{
-                token: token,
-                name: product.name,
-                description: product.description,
-                price: product.price,
-                image: result.data.path
-            });
-            if(!result.data.success){
-                console.log(result);
-            }
-            else{
-                close();
-                setProductAdded(!productAdded);
-                
-            }
-            setIsLoading(false);
+            console.log(result);
         }
         else{
             close();
             setProductAdded(!productAdded);
+            
         }
+        setIsLoading(false);
     }
 
     const delete_item =  async (id) => {
@@ -114,13 +104,14 @@ export default function ProductsPage() {
         setIsLoading(false);
     }
 
-    const edit_item = async(id, name, description, price) => {
+    const edit_item = async(id, name, description, price, image) => {
         close();
         setEditProduct({
             id: id,
             name: name,
             description: description,
-            price: price
+            price: price,
+            image: image
         });
 
         setEditItemMenu(true);
@@ -141,7 +132,8 @@ export default function ProductsPage() {
             id: editProduct.id,
             name: editProduct.name,
             description: editProduct.description,
-            price: editProduct.price
+            price: editProduct.price,
+            image: editProduct.image
         });
         if(!result.data.success){
             console.log(result);
@@ -175,7 +167,10 @@ export default function ProductsPage() {
                 <TextInput className='' label="Item Price" placeholder='eg: NPR 1200' onChange={(event) => {
                     product.price = event.currentTarget.value;
                 }}></TextInput>
-                <input id="image-file" type="file"></input>
+                <TextInput className='' label="Item Image Url" placeholder='' onChange={(event) => {
+                    product.image = event.currentTarget.value;
+                }}></TextInput>
+                
                 <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
             </form>
         </Dialog>
@@ -213,7 +208,18 @@ export default function ProductsPage() {
                         }
                     )
                 }}></TextInput>
-                <input id="image-file-edit" type="file"></input>
+                <TextInput className='' label="Item Image" placeholder={editProduct.price} onChange={(event) => {
+                    setEditProduct(
+                        {
+                            id: editProduct.id,
+                            name: editProduct.name,
+                            description: editProduct.description,
+                            price: editProduct.description,
+                            image: event.currentTarget.value
+                        }
+                    )
+                }}></TextInput>
+                
                 <Button color='black' type='submit'>{isLoading?<Loader color="white" size="xs"/>: "Add item"}</Button>
             </form>
         </Dialog>

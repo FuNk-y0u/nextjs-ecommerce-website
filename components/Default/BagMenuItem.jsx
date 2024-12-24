@@ -1,24 +1,20 @@
+import { Indicator } from '@mantine/core';
 import React from 'react'
-import { Button, Drawer, Indicator, rem, TextInput } from '@mantine/core'
-import { IconTrash } from '@tabler/icons-react'
-import StockPickleImage from "@/public/lemon-pickle-recipe.jpg";
-import Image from 'next/image';
+
 export default function BagMenuItem(props) {
   return (
         <div className="flex flex-col gap-5">
                 <div className="w-full flex items-center justify-around gap-2">
-                    <div className="border border-2 rounded-lg">
-                    <Indicator color='black' label="4" inline size={20}>
-                        <Image width="100" height="100" src={StockPickleImage}></Image>
+                    <Indicator size="lg" radius="sm" label={props.count} color='black'>
+                        <img width="100" height="100" src={props.image}></img>
                     </Indicator>
-                    </div>
+                    
                     <div className="flex flex-col overflow-hidden">
                         <h3 className='text-sm text-ellipsis overflow-hidden w-32'>{props.name}</h3>
-                        <p className='text-xs underline cursor-pointer'>Remove</p>
+                        <p className='text-xs underline cursor-pointer' onClick={props.remove}>Remove</p>
                     </div>
-                    
-                    <p className=''>रु {props.price}</p>
+                    <p className=''>रु {props.count * props.price}</p>
                 </div>
             </div>
-  )
+  );
 }
