@@ -1,4 +1,4 @@
-import { Indicator } from '@mantine/core';
+import { Indicator, Loader } from '@mantine/core';
 import { IconCircleMinus, IconCross } from '@tabler/icons-react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
@@ -15,12 +15,14 @@ export default function BagMenuItem(props) {
             clearTimeout(timer);
             
             timer = setTimeout(async ()=>{
+                props.setIsLoading(true);
                 let result = await axios.post(getEndpoint(endPoints.changeitemCount),{
                     id: getCookie("cart-id"),
                     itemId: props.id,
                     itemCount: count
                 });
-                props.setBagChanged(!props.bagChanged)
+                props.setBagChanged(!props.bagChanged);
+                props.setIsLoading(false);
 
             }, 500);
             
@@ -59,7 +61,7 @@ export default function BagMenuItem(props) {
                             }>+</button>
                         </div>
                     </div>
-                    <p className='text-lg'>रु {props.price}</p>
+                    <p className='text-lg'>रु {props.isLoading?<Loader size="xs" color='black'></Loader>:props.price}</p>
                 </div>
             </div>
   );

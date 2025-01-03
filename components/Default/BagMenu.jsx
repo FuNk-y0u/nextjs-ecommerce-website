@@ -41,11 +41,13 @@ export default function BagMenu(props) {
     [bagChanged, props.opened]
     )
     async function remove(itemId){
+        setIsLoading(true);
         var id = getCookie("cart-id")
         var result = await axios.post(getEndpoint(endPoints.removecartItem), {
             id: id,
             itemId: itemId
         });
+        setIsLoading(false);
         setBagChanged(!bagChanged);
 
     }
@@ -59,7 +61,7 @@ export default function BagMenu(props) {
             <hr></hr>
             {
                 items.map((value) => {
-                    return <BagMenuItem id={value.item.id} key={value.item.id} name={value.item.name} price={value.total} image={value.item.image} count={value.count} remove={() => {remove(value.item.id)}} setBagChanged={setBagChanged} bagChanged={bagChanged}></BagMenuItem>;
+                    return <BagMenuItem isLoading={isLoading} setIsLoading={setIsLoading} id={value.item.id} key={value.item.id} name={value.item.name} price={value.total} image={value.item.image} count={value.count} remove={() => {remove(value.item.id)}} setBagChanged={setBagChanged} bagChanged={bagChanged}></BagMenuItem>;
                 })
             }
             
