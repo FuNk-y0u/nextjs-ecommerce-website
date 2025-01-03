@@ -23,7 +23,15 @@ export default async function getcartsitems(req, res){
                 ]
             },
             include: {
-                item: true
+                item: {
+                    select: {
+                        id: true,
+                        name: true,
+                        price: true,
+                        image: true,
+                        description: false
+                    }
+                }
             }
         });
         let sortedItems = {};
