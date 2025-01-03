@@ -2,7 +2,15 @@ import prisma from "@/lib/db";
 
 export default async function getitem(req, res){
     if (req.method == "POST"){
-        const results = await prisma.Items.findMany({});
+        const results = await prisma.Items.findMany({
+            select: {
+                id: true,
+                name: true,
+                price: true,
+                image: true,
+                description: false
+            }
+        });
         if(!results){
             res.status(200).json({
                 success: true,

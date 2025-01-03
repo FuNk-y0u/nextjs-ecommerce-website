@@ -32,7 +32,7 @@ export default function index({products}) {
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         {
           items.map((value) => {
-            return <ProductItem id={value.id} router={router} name={value.name} price={value.price} image={value.image} addCart={() => {
+            return <ProductItem key={value.id} id={value.id} router={router} name={value.name} price={value.price} image={value.image} addCart={() => {
               addToCart(value.id);
             }}/>
           })
