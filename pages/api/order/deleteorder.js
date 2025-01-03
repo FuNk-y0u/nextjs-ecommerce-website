@@ -2,7 +2,7 @@ import prisma from "@/lib/db";
 import {check_admin} from "@/lib/token";
 
 
-export default async function deleteitem(req, res) {
+export default async function deleteorder(req, res) {
     if (req.method == "POST"){
         var token = req.body.token;
         var id = req.body.id;
@@ -32,7 +32,7 @@ export default async function deleteitem(req, res) {
         }
 
         
-        var product = await prisma.Items.findUnique({
+        var product = await prisma.Orders.findUnique({
             where:{
                 id: id
             }
@@ -44,15 +44,8 @@ export default async function deleteitem(req, res) {
                 message: "Invalid product id",
             });
         }
-        
-       await prisma.CartItem.deleteMany({
-            where: {
-                itemId: id
-                
-            }
-       });
 
-        await prisma.Items.delete({
+        await prisma.Orders.delete({
             where: {
                 id: id
             }

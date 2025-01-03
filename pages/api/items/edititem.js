@@ -1,4 +1,4 @@
-import prisma from "lib/db";
+import prisma from "../../../lib/db";
 import {check_admin} from "../../../lib/token";
 export default async function deleteitem(req, res) {
     if (req.method == "POST"){

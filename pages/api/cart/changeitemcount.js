@@ -22,6 +22,7 @@ export default async function changeitemcount(req, res){
             });
             return;
         }
+
         const item = await prisma.CartItem.findFirst({
             where: {
               AND: [

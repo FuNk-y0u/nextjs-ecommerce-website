@@ -1,8 +1,7 @@
-import prisma from "@/lib/db";
-import {check_admin} from "@/lib/token";
+import prisma from "../../../lib/db";
+import {check_admin} from "../../../lib/token";
 
-
-export default async function deleteitem(req, res) {
+export default async function editorder(req, res){
     if (req.method == "POST"){
         var token = req.body.token;
         var id = req.body.id;
@@ -31,36 +30,24 @@ export default async function deleteitem(req, res) {
             return;
         }
 
-        
-        var product = await prisma.Items.findUnique({
-            where:{
-                id: id
-            }
-        });
+        var body = req.body;
 
-        if(!product){
-            res.status(200).json({
-                success: false,
-                message: "Invalid product id",
-            });
+        var newOrder = {
+            email: body.email?body.email:"",
+            phone: body.phone?body.phone:"",
+            firstName: body.firstname?body.firstname:"",
+            lastName: body.lastname?body.lastname:"",
+            shippingAddress: body.address?body.address:"",
+            city: body.city?body.city:""
         }
-        
-       await prisma.CartItem.deleteMany({
-            where: {
-                itemId: id
-                
-            }
-       });
 
-        await prisma.Items.delete({
-            where: {
-                id: id
-            }
+        await prisma.Orders.update({
+            where: {id: id},
+            data: newOrder
         });
-        
         res.status(200).json({
             success: true,
-            message: "Sucessfully deleted product",
+            message: "Sucess!",
         });
     }
     else{

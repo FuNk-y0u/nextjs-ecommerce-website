@@ -19,6 +19,8 @@ model Orders{
   firstName String
   lastName String
   shippingAddress String
+  city String
+  cartId String
 }
 
 model Items{
@@ -28,13 +30,6 @@ model Items{
   price String
   image String
   cartItem CartItem[]
-}
-
-model OrderItems{
-  id Int @id @default(autoincrement())
-  orderId String
-  itemId String
-  itemCount Int
 }
 
 model CartItem{

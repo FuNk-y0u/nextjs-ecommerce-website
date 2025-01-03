@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { getEndpoint, endPoints} from '@/lib/pages';
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 async function addToCart(itemId){
   let id = getCookie("cart-id");
@@ -17,7 +18,7 @@ async function addToCart(itemId){
 
 export default function index({products}) {
   const items = products.items;
-
+  const router = useRouter();
   return (
     <>
     <div className="h-96 flex items-center justify-center" id="head-bar" style={{
@@ -31,7 +32,7 @@ export default function index({products}) {
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         {
           items.map((value) => {
-            return <ProductItem name={value.name} price={value.price} image={value.image} addCart={() => {
+            return <ProductItem id={value.id} router={router} name={value.name} price={value.price} image={value.image} addCart={() => {
               addToCart(value.id);
             }}/>
           })

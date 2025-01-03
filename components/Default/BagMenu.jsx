@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { BackgroundImage, Button, Drawer } from '@mantine/core'
+import { BackgroundImage, Button, Drawer, Loader } from '@mantine/core'
 
 import BagMenuItem from './BagMenuItem'
 
@@ -15,16 +15,24 @@ export default function BagMenu(props) {
     const [items, setItems] = useState([]);
 
     const [totalCost, setTotalCost] = useState(0.0);
-    var tmp = 0.0;
+
+    const[isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         async function getCart() {
+            setIsLoading(true);
             var id = getCookie("cart-id")
             var result = await axios.post(getEndpoint(endPoints.getcartItems), {
                 id: id
             })
-            console.log(result);
-            setItems(result.data.items);
+            
+            let tmpItems = result.data.items;
+            tmpItems.sort(
+                (a,b) => (a.id > b.id ? 1: -1)
+            );
+            setItems(tmpItems);
+            setTotalCost(result.data.total);
+            setIsLoading(false);
         }
         getCart();
         
@@ -51,7 +59,7 @@ export default function BagMenu(props) {
             <hr></hr>
             {
                 items.map((value) => {
-                    return <BagMenuItem key={value.item.id} name={value.item.name} price={value.item.price} image={value.item.image} count={value.count} remove={() => {remove(value.item.id)}}></BagMenuItem>;
+                    return <BagMenuItem id={value.item.id} key={value.item.id} name={value.item.name} price={value.total} image={value.item.image} count={value.count} remove={() => {remove(value.item.id)}} setBagChanged={setBagChanged} bagChanged={bagChanged}></BagMenuItem>;
                 })
             }
             
@@ -61,16 +69,12 @@ export default function BagMenu(props) {
                 <h1 className=''>Estimated Total</h1>
                 <div className="flex gap-2 items-end">
                     <p className='text-sm font-light'>NPR</p>
-                    {
-                        items.forEach(element => {
-                            tmp += element.item.price * element.count
-                        })
-                    }
-                    <p className='text-2xl'> रु {tmp}</p>
+                    
+                    <p className='text-2xl'> रु {totalCost}</p>
                 </div>
                 
             </div>
-            <Button color='black'>Check out</Button>
+            <Button color='black'>{isLoading?<Loader size="xs" color='white'></Loader>:"Checkout"}</Button>
         </div>
         
     </Drawer>

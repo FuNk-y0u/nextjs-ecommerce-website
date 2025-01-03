@@ -1,13 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/db';
 
-export default async function getcartitems(req, res){
+export default async function getcartsitems(req, res){
     if (req.method == "POST"){
-        var id = req.body.id;
-        var itemId = req.body.itemId;
-        var itemCount = req.body.itemCount;
+        var ids = req.body.ids;
 
-        if(!id){
+
+        if(!ids){
             res.status(200).json({
                 success: false,
                 message: "Invalid cart id",
@@ -17,27 +16,28 @@ export default async function getcartitems(req, res){
 
         const items = await prisma.CartItem.findMany({
             where: {
-              AND: [
-                { cartId: id }
-              ]
+                AND: [
+                    {cartId: {
+                        in: ids
+                    }}
+                ]
             },
             include: {
                 item: true
             }
         });
-
-        var total = 0.0;
-
+        let sortedItems = {};
         items.forEach(element => {
-            element.total = element.count * Number(element.item.price)
-            total += element.total
+            sortedItems[element.cartId] = []
+        });
+        items.forEach(element => {
+            sortedItems[element.cartId].push(element);
         });
 
         res.status(200).json({
             success: true,
             message: "Success!",
-            total: total,
-            items: items
+            items: sortedItems
         });
         return;
     }

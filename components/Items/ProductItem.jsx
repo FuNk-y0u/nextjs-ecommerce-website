@@ -10,7 +10,9 @@ export default function ProductItem(props) {
           <img src={props.image} width="200" height="200" className='rounded-lg'></img>
         </div>
         
-        <p className='font-bold hover:underline underline-offset-2 cursor-pointer' id="item-name">{props.name}</p>
+        <p className='font-bold hover:underline underline-offset-2 cursor-pointer' id="item-name" onClick={() => {
+          props.router.push(`items/${props.id}`)
+        }}>{props.name}</p>
         <p className='font-light'>रु  {props.price}</p>
         <Button color='black' onClick={props.addCart}>Add to cart</Button>
       </div>
