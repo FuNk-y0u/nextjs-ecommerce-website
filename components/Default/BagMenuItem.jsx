@@ -15,7 +15,7 @@ export default function BagMenuItem(props) {
             clearTimeout(timer);
             
             timer = setTimeout(async ()=>{
-                let result = axios.post(getEndpoint(endPoints.changeitemCount),{
+                let result = await axios.post(getEndpoint(endPoints.changeitemCount),{
                     id: getCookie("cart-id"),
                     itemId: props.id,
                     itemCount: count
