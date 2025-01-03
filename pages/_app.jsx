@@ -17,7 +17,6 @@ function checkCartId(){
 
   // Checking if cart-id cookie exists
   if(!getCookie("cart-id")){
-
     // Getting new cart-id
     var result = axios.post(getEndpoint(endPoints.getcartId), {});
 
