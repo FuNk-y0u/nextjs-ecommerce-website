@@ -9,7 +9,7 @@ import { getCookie } from 'cookies-next';
 var timer = null;
 export default function BagMenuItem(props) {
     const [count, setCount] = useState(Number(props.count));
-
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(
         () => {
             clearTimeout(timer);
@@ -21,9 +21,7 @@ export default function BagMenuItem(props) {
                     itemCount: count
                 });
                 props.setBagChanged(!props.bagChanged);
-
-            }, 500);
-            
+            }, 500);            
         },
         [count]
     )
@@ -59,7 +57,7 @@ export default function BagMenuItem(props) {
                             }>+</button>
                         </div>
                     </div>
-                    <p className='text-lg'>रु {props.isLoading?<Loader size="xs" color='black'></Loader>:props.price}</p>
+                    <p className='text-lg'>रु {isLoading?<Loader size="xs" color='black'></Loader>:props.price}</p>
                 </div>
             </div>
   );

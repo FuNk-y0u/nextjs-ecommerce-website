@@ -5,7 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { getEndpoint, endPoints } from '../../lib/pages';
 import BagMenuItem from '../../components/Default/BagMenuItem';
 import {useForm } from '@mantine/form';
+
 import { useRouter } from 'next/navigation';
+import CheckoutItem from '../../components/Checkout/CheckoutItem';
 async function remove(itemId, onComplete){
         var id = getCookie("cart-id");
         var result = await axios.post(getEndpoint(endPoints.removecartItem), {
@@ -43,6 +45,7 @@ export default function index() {
   })
   const [bagChanged, setBagChanged] = useState(false);
   const [items, setItems] = useState([]);
+  const [totalCost, setTotalCost] = useState(0.0);
   useEffect(() => {
     async function getCart() {
         var id = getCookie("cart-id");
@@ -51,14 +54,19 @@ export default function index() {
         });
         console.log(result);
         setItems(result.data.items);
+        setTotalCost(result.data.total);
     }
     getCart();
   },[bagChanged]);
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center">
-      <div className="flex w-full border flex-col gap-4 p-20">
-        <form onSubmit={form.onSubmit((values) => {
+    <div className="flex flex-col lg:flex-row">
+      <div className="flex w-full border flex-col gap-4 p-4 items-center lg:items-end">
+        <div className="flex flex-col w-96">
+          <h1 className='text-2xl font-medium'>Delivery</h1>
+        </div>
+        
+        <form className='flex flex-col gap-2 w-96' onSubmit={form.onSubmit((values) => {
           sendOrder(values, router);
         })}>
           <TextInput label="Your email" key={form.key("email")}
@@ -74,17 +82,29 @@ export default function index() {
             <TextInput label="Last Name" className='w-full' key={form.key("lastname")} {...form.getInputProps("lastname")}></TextInput>
           </div>
           <TextInput label="City" className='w-full' key={form.key("city")} {...form.getInputProps("city")}></TextInput>
-          <Button color='black' type='submit'>Complete Order</Button>
+          <div className="flex flex-col">
+            <Button color='black' type='submit' className='w-full'>Complete Order</Button>
+          </div>
+          
         </form>
 
       </div>
-      <div className="flex flex-col w-full h-[100vh] bg-gray-100 items-center lg:justify-center gap-5 p-8 lg:p-0">
-        <h1>Order Summary</h1>
+      <div className="flex flex-col w-full h-[100vh] bg-gray-100 gap-5 p-8 lg:items-start items-center">
+        <h1 className='text-2xl'>Order Summary</h1>
         {
           items.map((value) => {
-              return <BagMenuItem key={value.item.id} name={value.item.name} price={value.item.price} image={value.item.image} count={value.count} remove={() => {remove(value.item.id, () => {setBagChanged(!bagChanged)})}}></BagMenuItem>;
+            return <CheckoutItem name={value.item.name} image={value.item.image} price={value.total} count={value.count}></CheckoutItem>
           })
         }
+        
+        <div className="flex justify-between w-96">
+          <p className='font-medium text-xl'>Total</p>
+          <div className="flex gap-2">
+            <p className='font-light'>NPR</p>
+            <p className='font-medium'>रु {totalCost}</p>
+          </div>
+          
+        </div>
       </div>
     </div>
   )

@@ -1,17 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @layer tailwind {
   @tailwind base;
 }
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: "Roboto", sans-serif;
-}
-
-#item-pannel:hover > #item-name{
-  text-decoration: underline;
-}
 
 #head-bar{
   background-repeat: no-repeat;
@@ -32,6 +24,7 @@
 textarea:focus, input:focus{
   outline: none;
 }
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -42,4 +35,11 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.item-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 14rem);
+  grid-template-rows: repeat(auto-fit, 360px);
+  gap: 1rem;
 }

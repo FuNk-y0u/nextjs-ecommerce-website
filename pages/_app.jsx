@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import { getEndpoint, endPoints } from "../lib/pages";
 import { getCookie, setCookie } from 'cookies-next';
+import BottomBar from '../components/BottomBar';
 const theme = createTheme({ 
   /** Put your mantine theme override here */
 });
@@ -44,6 +45,10 @@ function Application({ Component, pageProps }) {
       }
       
       <Component {...pageProps} />
+
+      {
+        pathname.includes("/admin")?"":<BottomBar/>
+      }
     </MantineProvider>
   </>
 }

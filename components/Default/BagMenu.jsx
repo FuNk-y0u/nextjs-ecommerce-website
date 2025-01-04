@@ -53,7 +53,9 @@ export default function BagMenu(props) {
     }
   return (
     <Drawer position='right' onClose={props.onClose} opened={props.opened} title="Your Cart">
-        <div className="h-full w-full flex flex-col gap-2 items-between">
+        {
+            items.length != 0?
+            <div className="h-full w-full flex flex-col gap-2 items-between">
             <div className="flex justify-between text-xs">
                 <p>Products</p>
                 <p>Total (NPR)</p>
@@ -76,8 +78,17 @@ export default function BagMenu(props) {
                 </div>
                 
             </div>
+            
             <Button color='black'>{isLoading?<Loader size="xs" color='white'></Loader>:"Checkout"}</Button>
         </div>
+        :
+        <div className="flex flex-col gap-10 items-center justify-center w-full h-[80vh]">
+            <h1 className='text-2xl font-bold'>Your bag is empty</h1>
+            <Button color='black' size='lg' onClick={props.onClose}>Continue Shopping</Button>
+        </div>
+        
+        }
+        
         
     </Drawer>
   )

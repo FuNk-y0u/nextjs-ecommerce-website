@@ -5,16 +5,19 @@ import { Button } from '@mantine/core';
 
 export default function ProductItem(props) {
   return (
-    <div className="flex flex-col gap-2 hover:bg-stone-200 p-5 rounded-lg transition-colors " id="item-pannel">
-        <div className="rounded-lg">
-          <img src={props.image} width="200" height="200" className='rounded-lg'></img>
+    <div className="flex flex-col gap-2 p-5 transition-colors justify-between items-center border-2 rounded-md" id="item-pannel">
+      <img src={props.image} width="200" height="200" className='rounded-md'></img>
+        <div className="w-full">
+          <p className='font-bold hover:underline underline-offset-2 cursor-pointer text-xl' onClick={() => {
+            props.router.push(`items/${props.id}`)
+          }}>{props.name}</p>
+          <p className='font-light'>रु  {props.price}</p>
         </div>
         
-        <p className='font-bold hover:underline underline-offset-2 cursor-pointer' id="item-name" onClick={() => {
-          props.router.push(`items/${props.id}`)
-        }}>{props.name}</p>
-        <p className='font-light'>रु  {props.price}</p>
-        <Button color='black' onClick={props.addCart}>Add to cart</Button>
+        <div className="flex flex-col w-full">
+          <Button color='black' onClick={props.addCart}>Add to cart</Button>
+        </div>
+        
       </div>
   )
 }
