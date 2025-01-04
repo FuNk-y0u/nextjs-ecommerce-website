@@ -40,8 +40,12 @@ function Application({ Component, pageProps }) {
 
   return <>
     <MantineProvider theme={theme}>
+      {/*
+        ! HACKY AHHH SHIT INCOMMING!
+        TODO WRAP THIS IN TO A FUNCTION
+       */}
       {
-        pathname.includes("/admin")?"":<NavBar/>
+        pathname.includes("/admin")?"": pathname.includes("/checkout")?<NavBar disableCart={true}></NavBar>:<NavBar disableCart={false}></NavBar>
       }
       
       <Component {...pageProps} />

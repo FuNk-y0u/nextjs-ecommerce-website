@@ -8,6 +8,7 @@ import { endPoints, getEndpoint } from '../../lib/pages';
 
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 
 export default function BagMenu(props) {
@@ -17,7 +18,8 @@ export default function BagMenu(props) {
     const [totalCost, setTotalCost] = useState(0.0);
 
     const[isLoading, setIsLoading] = useState(false);
-
+    const router = useRouter();
+    
     useEffect(() => {
         async function getCart() {
             setIsLoading(true);
@@ -79,17 +81,24 @@ export default function BagMenu(props) {
                 
             </div>
             
-            <Button color='black'>{isLoading?<Loader size="xs" color='white'></Loader>:"Checkout"}</Button>
+            <Button color='black'
+                onClick={() => {
+                    if(isLoading){
+                    }
+                    else{
+                        props.onClose();
+                        router.push("/checkout");
+                    }
+
+                }}
+            >{isLoading?<Loader size="xs" color='white'></Loader>:"Checkout"}</Button>
         </div>
         :
         <div className="flex flex-col gap-10 items-center justify-center w-full h-[80vh]">
             <h1 className='text-2xl font-bold'>Your bag is empty</h1>
             <Button color='black' size='lg' onClick={props.onClose}>Continue Shopping</Button>
         </div>
-        
         }
-        
-        
     </Drawer>
   )
 }

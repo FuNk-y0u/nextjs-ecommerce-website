@@ -2,15 +2,20 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Loader} from '@mantine/core';
 import { endPoints, getEndpoint } from '../../lib/pages';
-import BagMenuItem from '../Default/BagMenuItem';
+
+import CheckoutItem from '../Checkout/CheckoutItem';
 
 function genCartItems(Cartitems){
+  //! ITEM.ITEM.ITEM?!?!?!?!
+  // TODO Think a better name for this shit!
+
   var data = [];
+  var total = 0.0;
   Cartitems.forEach((item) => {
-    console.log(item.item.name, item.count)
-    data.push(<BagMenuItem count={item.count} image={item.item.image} name={item.item.name} price={item.item.price}></BagMenuItem>)
+    data.push(<CheckoutItem count={item.count} image={item.item.image} name={item.item.name} price={Number(item.item.price) * Number(item.count)}></CheckoutItem>)
+    total += Number(item.item.price) * Number(item.count);
   });
-  console.log(data);
+  data.push(<h1>Total NPR: {total}</h1>)
   return data;
 }
 

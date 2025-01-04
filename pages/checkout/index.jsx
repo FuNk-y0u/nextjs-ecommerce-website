@@ -1,4 +1,4 @@
-import { Button, TextInput } from '@mantine/core'
+import { Button, Loader, TextInput } from '@mantine/core'
 import axios from 'axios';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import React, { useEffect, useState } from 'react'
@@ -46,6 +46,7 @@ export default function index() {
   const [bagChanged, setBagChanged] = useState(false);
   const [items, setItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0.0);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getCart() {
         var id = getCookie("cart-id");
@@ -55,6 +56,7 @@ export default function index() {
         console.log(result);
         setItems(result.data.items);
         setTotalCost(result.data.total);
+        setLoading(false);
     }
     getCart();
   },[bagChanged]);
@@ -92,6 +94,12 @@ export default function index() {
       <div className="flex flex-col w-full h-[100vh] bg-gray-100 gap-5 p-8 lg:items-start items-center">
         <h1 className='text-2xl'>Order Summary</h1>
         {
+          loading?
+          <div className="flex items-center justify-center w-96">
+            <Loader color='black' ></Loader>
+          </div>
+          
+          :
           items.map((value) => {
             return <CheckoutItem name={value.item.name} image={value.item.image} price={value.total} count={value.count}></CheckoutItem>
           })
@@ -103,7 +111,6 @@ export default function index() {
             <p className='font-light'>NPR</p>
             <p className='font-medium'>रु {totalCost}</p>
           </div>
-          
         </div>
       </div>
     </div>

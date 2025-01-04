@@ -44,13 +44,19 @@ export default function NavBar(props) {
             <NavBarRoutes/>
 
             {/* Cart button */}
-            <CartButton openCart={() => {
-                setOpenNav(false);
-                setOpenCart(true);
-            }}/>
+            {
+                props.disableCart?
+                "":
+                <CartButton openCart={() => {
+                    setOpenNav(false);
+                    setOpenCart(true);
+                }}/>
+            }
+            
 
         </div>
 
+        
         {/* Cart Drawer */}
         <BagMenu opened={openCart} onClose={()=>{setOpenCart(false)}} />
         
