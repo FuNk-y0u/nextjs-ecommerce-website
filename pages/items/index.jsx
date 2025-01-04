@@ -50,7 +50,7 @@ export default function index() {
       <div className="md:w-[60%]">
         {
           loading?
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center h-[80vh]">
             <Loader color="black"></Loader>
           </div>:
           <div className='item-grid'>
