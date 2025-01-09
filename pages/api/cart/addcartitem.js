@@ -41,14 +41,6 @@ export default async function getcartid(req, res){
             });
         }
         else{
-            await prisma.CartItem.update({
-                where: {
-                    id: item.id
-                },
-                data: {
-                    count: item.count + 1
-                }
-            });
         }
 
         res.status(200).json({

@@ -7,6 +7,8 @@ import NavBarLogo from "./NavBarLogo";
 import { Button, Drawer} from "@mantine/core";
 import { IconMenu, IconShoppingBag } from "@tabler/icons-react";
 
+import logo from "@/public/logo.jpg";
+import Image from "next/image";
 function NavButton(props){
     return (
         <div className="md:hidden">
@@ -28,7 +30,9 @@ function CartButton(props){
 export default function NavBar(props) {
     const [openCart, setOpenCart] = useState(false);
     const [openNav, setOpenNav] = useState(false);
-
+    globalThis.openCart = () => {
+        setOpenCart(true);
+    }
     return <>
 
         {/* NavBar Desktop */}
@@ -38,7 +42,12 @@ export default function NavBar(props) {
             <NavButton openNav={()=>{setOpenNav(true)}}/>
             
             {/* Aacahr web */}
-            <NavBarLogo name="aachar web"/>
+            <div className="flex items-center gap-2 justify-center">
+                <Image src={logo} className="w-16"></Image>
+                
+                <NavBarLogo name="Ama Kashi Achaar"/>
+            </div>
+            
 
             {/* Home Items Aboutus Page Links */}
             <NavBarRoutes/>
@@ -67,17 +76,22 @@ export default function NavBar(props) {
             <div className="flex flex-col h-[80vh] w-full justify-around">
 
                 {/* Aachar Web */}
-                <NavBarLogo name="aachar web"/>
+                <Image src={logo} className="w-16"></Image>
 
                 {/* Home Items Aboutus Page Links */}
                 <NavBarRoutes mob={true} closeNav={()=>{setOpenNav(false)}}/>
 
                 {/* Cart Button */}
                 <div className="">
-                    <CartButton openCart={() => {
-                        setOpenNav(false);
-                        setOpenCart(true);
-                    }}/>
+                    {
+                        props.disableCart?
+                        "":
+                        <CartButton openCart={() => {
+                            setOpenNav(false);
+                            setOpenCart(true);
+                        }}/>
+                    }
+                    
                 </div>
             </div>
         </Drawer>

@@ -56,9 +56,9 @@ export default function index() {
           <div className='item-grid'>
             {
               items.map((value) => {
-                return <ProductItem key={value.id} id={value.id} router={router} name={value.name} price={value.price} image={value.image} addCart={() => {
-                  addToCart(value.id);
-                }}/>
+                return <ProductItem key={value.id} id={value.id} router={router} name={value.name} price={value.price} image={value.image} addCart={async () => {
+                  await addToCart(value.id);
+                }} openBagDrawer={globalThis.openCart}/>
               })
             }
           </div>

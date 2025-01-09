@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import {NavLink } from "@mantine/core";
+import { IconChevronRight, IconHome, IconHome2, IconLayoutList, IconSmartHome } from '@tabler/icons-react';
 
 export default function NavBarRoutes(props) {
     const router = useRouter();
@@ -13,10 +14,7 @@ export default function NavBarRoutes(props) {
                 }}>Home</a>
                 <a className="hover:underline underline-offset-2 cursor-pointer" onClick={ () => {
                     router.push('/items');
-                }}>Items</a>
-                <a className="hover:underline underline-offset-2 cursor-pointer" onClick={() => {
-                    router.push('/aboutus');
-                }}>About us</a>
+                }}>Aachars</a>
             </div>
         );
     }
@@ -28,19 +26,29 @@ export default function NavBarRoutes(props) {
                         router.push('/');
                         props.closeNav();
                     }
-                }/>
-                <NavLink  color="black" label="Items" onClick={
+                }
+                leftSection ={
+                    <IconSmartHome />
+                }
+                rightSection={
+                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                }
+                />
+                <NavLink  color="black" label="Aachars"
+                leftSection ={
+                    <IconLayoutList></IconLayoutList>
+                }
+                 onClick={
                     () => {
                         router.push('/items');
                         props.closeNav();
                     }
-                }/>
-                <NavLink  color="black" label="About Us" onClick={
-                    () => {
-                        router.push('/aboutus');
-                        props.closeNav();
-                    }
-                }/>
+                }
+                
+                rightSection={
+                    <IconChevronRight size="0.8rem" stroke={1.5} className="mantine-rotate-rtl" />
+                }
+                />
             </div>
         );
     }

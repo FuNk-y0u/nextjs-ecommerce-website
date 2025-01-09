@@ -38,15 +38,23 @@ export default function index() {
   const router = useRouter();
   const form = useForm({
     mode: 'uncontrolled',
+    initialValues: { email: '', phone: '', address:'', city: '', firstname: '', lastname: '' },
     
+    // ! Clean this messy looking object and functions!
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      phone: (value) => (/\d{10}/.test(value)? null : "Invalid phone"),
+      address: (value) => (value.length > 0 ? null : "address cannot be empty"),
+      city: (value) => (value.length > 0 ? null : "city cannot be empty"),
+      firstname: (value) => (value.length > 0 ? null : "firstname cannot be empty"),
+      lastname: (value) => (value.length > 0 ? null : "lastname cannot be empty")
     }
   })
   const [bagChanged, setBagChanged] = useState(false);
   const [items, setItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0.0);
   const [loading, setLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
   useEffect(() => {
     async function getCart() {
         var id = getCookie("cart-id");
@@ -68,8 +76,9 @@ export default function index() {
           <h1 className='text-2xl font-medium'>Delivery</h1>
         </div>
         
-        <form className='flex flex-col gap-2 w-96' onSubmit={form.onSubmit((values) => {
-          sendOrder(values, router);
+        <form className='flex flex-col gap-2 w-96' onSubmit={form.onSubmit( async (values) => {
+          setSubmitLoading(true);
+          await sendOrder(values, router);
         })}>
           <TextInput label="Your email" key={form.key("email")}
             {...form.getInputProps("email")}
@@ -79,13 +88,13 @@ export default function index() {
           <TextInput label="Address" key={form.key("address")}
           {...form.getInputProps("address")}
           ></TextInput>
+          <TextInput label="City" className='w-full' key={form.key("city")} {...form.getInputProps("city")}></TextInput>
           <div className="flex w-full gap-2">
             <TextInput label="First Name" className='w-full' key={form.key("firstname")} {...form.getInputProps("firstname")}></TextInput>
             <TextInput label="Last Name" className='w-full' key={form.key("lastname")} {...form.getInputProps("lastname")}></TextInput>
           </div>
-          <TextInput label="City" className='w-full' key={form.key("city")} {...form.getInputProps("city")}></TextInput>
           <div className="flex flex-col">
-            <Button color='black' type='submit' className='w-full'>Complete Order</Button>
+            <Button color='black' type='submit' className='w-full'>{submitLoading?<Loader size="xs" color='white'></Loader>:"Complete Order"}</Button>
           </div>
           
         </form>
@@ -101,7 +110,7 @@ export default function index() {
           
           :
           items.map((value) => {
-            return <CheckoutItem name={value.item.name} image={value.item.image} price={value.total} count={value.count}></CheckoutItem>
+            return <CheckoutItem key={value.item.id} name={value.item.name} image={value.item.image} price={value.total} count={value.count}></CheckoutItem>
           })
         }
         
