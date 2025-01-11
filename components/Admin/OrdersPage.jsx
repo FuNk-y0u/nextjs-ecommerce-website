@@ -46,9 +46,9 @@ export default function OrdersPage() {
       getOrders();
     }, []
   );
+  // TODO MANAGE THIS TABLE CENTEPETEDE SHIT
   return (
     <div className="">
-      <h1>Hello world</h1>
       <Table withTableBorder withColumnBorders>
         <Table.Thead>
           <Table.Tr>

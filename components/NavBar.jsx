@@ -1,99 +1,83 @@
 import { useState } from "react";
 
-import BagMenu from "./Default/BagMenu";
-import NavBarRoutes from "./NavBarRoutes";
-import NavBarLogo from "./NavBarLogo";
+import Image from "next/image";
 
-import { Button, Drawer} from "@mantine/core";
-import { IconMenu, IconShoppingBag } from "@tabler/icons-react";
+import { Button } from "@mantine/core";
 
 import logo from "@/public/logo.jpg";
-import Image from "next/image";
-function NavButton(props){
+
+import CartDrawer from "./Default/CartDrawer";
+import { IconSearch, IconShoppingCart } from "@tabler/icons-react";
+
+function SearchButton(props) {
+  if (!props.hide) {
     return (
-        <div className="md:hidden">
-            <Button variant="transparent" onClick={props.openNav}>
-                <IconMenu color="black"/>
-            </Button>
-        </div>
+      <Button variant="transparent" color="black" onClick={props.onClick}>
+        <IconSearch></IconSearch>
+      </Button>
     );
+  } else {
+    return <></>;
+  }
 }
 
-function CartButton(props){
+function SiteLogo(props) {
+  if (!props.hide) {
     return (
-        <Button size="xs" variant="transparent" color="black" onClick={props.openCart}>
-            <IconShoppingBag stroke={1.0}/>
-        </Button>
+      <div
+        className="flex items-center gap-2 justify-center cursor-pointer"
+        onClick={props.onClick}
+      >
+        <Image src={logo} className="w-16"></Image>
+      </div>
     );
+  } else {
+    <></>;
+  }
+}
+
+function CartButton(props) {
+  if (!props.hide) {
+    return (
+      <Button variant="transparent" color="black" onClick={props.onClick}>
+        <IconShoppingCart />
+      </Button>
+    );
+  } else {
+    <></>;
+  }
 }
 
 export default function NavBar(props) {
-    const [openCart, setOpenCart] = useState(false);
-    const [openNav, setOpenNav] = useState(false);
-    globalThis.openCart = () => {
-        setOpenCart(true);
-    }
-    return <>
+  const [openCart, setOpenCart] = useState(false);
 
-        {/* NavBar Desktop */}
-        <div className="flex bg-gray-50 h-20 items-center justify-around sticky top-0 shadow-md z-10 w-full">
+  globalThis.openCart = () => {
+    setOpenCart(true);
+  };
 
-            {/* Navbar button for mobile */}
-            <NavButton openNav={()=>{setOpenNav(true)}}/>
-            
-            {/* Aacahr web */}
-            <div className="flex items-center gap-2 justify-center">
-                <Image src={logo} className="w-16"></Image>
-                
-                <NavBarLogo name="Ama Kashi Achaar"/>
-            </div>
-            
+  return (
+    <>
+      {/* NavBar Desktop */}
+      <div className="flex bg-gray-50 h-20 items-center md:justify-around justify-between sticky top-0 shadow-md z-10 w-full p-2 md:p-0">
+        <SearchButton />
 
-            {/* Home Items Aboutus Page Links */}
-            <NavBarRoutes/>
+        <SiteLogo />
 
-            {/* Cart button */}
-            {
-                props.disableCart?
-                "":
-                <CartButton openCart={() => {
-                    setOpenNav(false);
-                    setOpenCart(true);
-                }}/>
-            }
-            
+        <CartButton
+          hide={props.disableCart}
+          onClick={() => {
+            setOpenCart(true);
+          }}
+        />
+      </div>
 
-        </div>
-
-        
-        {/* Cart Drawer */}
-        <BagMenu opened={openCart} onClose={()=>{setOpenCart(false)}} />
-        
-        {/* Mobile Navbar */}
-        <Drawer opened={openNav} size="100%" onClose={() => {
-            setOpenNav(false)
-        }}>
-            <div className="flex flex-col h-[80vh] w-full justify-around">
-
-                {/* Aachar Web */}
-                <Image src={logo} className="w-16"></Image>
-
-                {/* Home Items Aboutus Page Links */}
-                <NavBarRoutes mob={true} closeNav={()=>{setOpenNav(false)}}/>
-
-                {/* Cart Button */}
-                <div className="">
-                    {
-                        props.disableCart?
-                        "":
-                        <CartButton openCart={() => {
-                            setOpenNav(false);
-                            setOpenCart(true);
-                        }}/>
-                    }
-                    
-                </div>
-            </div>
-        </Drawer>
+      {/* Cart Drawer */}
+      <CartDrawer
+        opened={openCart}
+        onClose={() => {
+          setOpenCart(false);
+        }}
+      />
     </>
+  );
 }
