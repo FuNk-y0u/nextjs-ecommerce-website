@@ -13,7 +13,7 @@ import chgCartCount from "../../data/chgCartCount";
 // Bad way to make timer global, but too bad
 var timer = null;
 
-export default function BagMenuItem(props) {
+export default function CartMenuItem(props) {
   const [count, setCount] = useState(Number(props.count));
   const [loading, setLoading] = useState(false);
 

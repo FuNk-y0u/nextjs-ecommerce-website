@@ -55,7 +55,7 @@ export default function index() {
       </div>
       <div className="flex flex-col items-center py-4 gap-4">
         <div className="flex flex-col w-auto gap-2">
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full px-4">
             <h1 className="text-3xl">For you</h1>
             <a className="underline text-gray-800 underline-offset-4">
               View all
@@ -80,7 +80,7 @@ export default function index() {
               );
             })}
           </div>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full px-4">
             <h1 className="text-3xl">Best sellers</h1>
             <a className="underline text-gray-800 underline-offset-4">
               View all

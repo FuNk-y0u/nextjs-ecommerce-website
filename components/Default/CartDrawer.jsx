@@ -8,7 +8,7 @@ import delCartItem from "../../data/delCartItems";
 import getCartItems from "../../data/getCartItems";
 
 import LoaderText from "../LoaderText";
-import BagMenuItem from "./BagMenuItem";
+import CartMenuItem from "./CartMenuItem";
 
 export default function CartDrawer(props) {
   const [items, setItems] = useState([]);
@@ -64,7 +64,7 @@ export default function CartDrawer(props) {
     const mappedItems = [];
     items.map((value) => {
       mappedItems.push(
-        <BagMenuItem
+        <CartMenuItem
           id={value.item.id}
           key={value.item.id}
           name={value.item.name}
@@ -75,7 +75,7 @@ export default function CartDrawer(props) {
             delCart(value.item.id);
           }}
           refreshCart={refreshCart}
-        ></BagMenuItem>
+        />
       );
     });
     return mappedItems;
@@ -111,12 +111,8 @@ export default function CartDrawer(props) {
   // Function for the checkout button
   function onCheckout() {
     // Do nothing if theres smth loading
-    isLoading
-      ? () => {}
-      : () => {
-          props.onClose();
-          globalThis.router.push("/checkout");
-        };
+    props.onClose();
+    globalThis.router.push("/checkout");
   }
 
   // Regular cart body
