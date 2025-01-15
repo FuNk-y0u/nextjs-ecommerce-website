@@ -21,6 +21,7 @@ model Orders{
   shippingAddress String
   city String
   cartId String
+  date DateTime @default(now())
 }
 
 model Items{
@@ -29,6 +30,7 @@ model Items{
   description String
   price String
   image String
+  count Int @default(0)
   cartItem CartItem[]
 }
 

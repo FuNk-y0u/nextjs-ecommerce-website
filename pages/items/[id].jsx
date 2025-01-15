@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { endPoints, getEndpoint } from "../../lib/pages";
 import { Button, Loader } from "@mantine/core";
 import { getCookie } from "cookies-next";
+import addCartItem from "../../data/addCartItem";
 
 async function addToCart(itemId) {
   let id = getCookie("cart-id");
@@ -64,7 +65,14 @@ export default function item({ item }) {
               size="md"
               onClick={async () => {
                 setLoading(true);
-                await addToCart(pitem.id);
+                await addCartItem(
+                  getCookie("cart-id"),
+                  pitem.id,
+                  count,
+                  (result) => {
+                    console.log(result);
+                  }
+                );
                 setLoading(false);
                 globalThis.openCart();
               }}
@@ -74,20 +82,6 @@ export default function item({ item }) {
               ) : (
                 "Add To Cart"
               )}
-            </Button>
-            <Button
-              color="black"
-              radius="xs"
-              size="md"
-              variant="outline"
-              onClick={async () => {
-                setLoading(true);
-                await addToCart(pitem.id);
-                setLoading(false);
-                globalThis.openCart();
-              }}
-            >
-              {loading ? <Loader size="xs" color="white"></Loader> : "Buy Now"}
             </Button>
           </div>
           <p className="">{pitem.description}</p>
@@ -111,22 +105,6 @@ export default function item({ item }) {
             ) : (
               "Add To Cart"
             )}
-          </Button>
-        </div>
-        <div className="flex flex-col w-full">
-          <Button
-            color="black"
-            radius="xs"
-            size="md"
-            variant="outline"
-            onClick={async () => {
-              setLoading(true);
-              await addToCart(pitem.id);
-              setLoading(false);
-              globalThis.openCart();
-            }}
-          >
-            {loading ? <Loader size="xs" color="white"></Loader> : "Buy Now"}
           </Button>
         </div>
       </div>

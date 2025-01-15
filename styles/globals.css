@@ -44,7 +44,7 @@ input[type="number"] {
 
 .item-grid {
   display: grid;
-  grid-template-columns: repeat(2, 12rem);
+  grid-template-columns: repeat(2, 11rem);
   grid-template-rows: repeat(auto-fit, 18rem);
   width: fit-content;
   gap: 1rem;
@@ -53,7 +53,16 @@ input[type="number"] {
 @media (min-width: 768px) {
   .item-grid {
     display: grid;
-    grid-template-columns: repeat(4, 12rem);
+    grid-template-columns: repeat(4, 11rem);
+    grid-template-rows: repeat(auto-fit, 18rem);
+    width: fit-content;
+  }
+}
+
+@media (max-width: 375px) {
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 11rem);
     grid-template-rows: repeat(auto-fit, 18rem);
     width: fit-content;
   }

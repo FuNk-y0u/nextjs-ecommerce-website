@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { startTransition, useState } from "react";
 
 import Image from "next/image";
 
@@ -7,19 +7,7 @@ import { Button } from "@mantine/core";
 import logo from "@/public/logo.jpg";
 
 import CartDrawer from "./Default/CartDrawer";
-import { IconSearch, IconShoppingCart } from "@tabler/icons-react";
-
-function SearchButton(props) {
-  if (!props.hide) {
-    return (
-      <Button variant="transparent" color="black" onClick={props.onClick}>
-        <IconSearch></IconSearch>
-      </Button>
-    );
-  } else {
-    return <></>;
-  }
-}
+import { IconShoppingCart } from "@tabler/icons-react";
 
 function SiteLogo(props) {
   if (!props.hide) {
@@ -59,9 +47,11 @@ export default function NavBar(props) {
     <>
       {/* NavBar Desktop */}
       <div className="flex bg-gray-50 h-20 items-center md:justify-around justify-between sticky top-0 shadow-md z-10 w-full p-2 md:p-0">
-        <SearchButton />
-
-        <SiteLogo />
+        <SiteLogo
+          onClick={() => {
+            globalThis.router.push("/");
+          }}
+        />
 
         <CartButton
           hide={props.disableCart}
