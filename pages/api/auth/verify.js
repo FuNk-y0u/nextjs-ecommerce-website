@@ -1,6 +1,8 @@
 import bcrypt_compare from "../../../lib/crypt";
 import prisma from "../../../lib/db";
 import {gen_admin_token} from "../../../lib/token";
+import bcrypt from 'bcrypt';
+
 
 export default async function verify(req, res){
     if (req.method == "POST"){
@@ -11,6 +13,9 @@ export default async function verify(req, res){
             });
             return;
         }
+        bcrypt.hash(password, 12, (err, hash) => {
+            console.log(hash);
+        });
 
         var admin = await prisma.Admin.findUnique({
             where: {
