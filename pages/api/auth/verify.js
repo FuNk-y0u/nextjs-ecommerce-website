@@ -13,6 +13,8 @@ export default async function verify(req, res){
             return;
         }
 
+
+        try{
         var admin = await prisma.Admin.findUnique({
             where: {
                 id: 1
@@ -37,6 +39,14 @@ export default async function verify(req, res){
             message: "Login sucessfull.",
             success: true
         });
+        }
+        catch(error){
+
+            res.status(200).json({
+                sucess:false,
+                message:error
+            });
+        }
     }
     else{
         res.status(200).json({
